@@ -5,12 +5,28 @@
 **a. Initial design**
 
 - Briefly describe your initial UML design.
+    Your initial UML design models PawPal+ with four core classes and clear responsibilities:
+
+   -  Task represents an individual care item, storing what to do, when it is due, how long it takes, its priority, and whether it is complete. It includes mark_complete() to update status.
+   -  Pet represents each animal, with identity details and a collection of tasks. It includes add_task() to attach tasks to that pet.
+  -   Owner represents the user who manages one or more pets.
+  -   Scheduler acts as the system’s coordinator, managing pets and their tasks through methods to add pets, gather all tasks, filter upcoming tasks, and check scheduling conflicts.
+
 - What classes did you include, and what responsibilities did you assign to each?
+    My initial UML design followed a hierarchical structure: an Owner acts as the top-level container, a Pet represents the individual animal, and a Task serves as the granular unit of work. 
+- What classes did you include, and what responsibilities did you assign to each?
+
+    - Task: Responsible for holding activity data like duration, priority, and completion status.- Pet: Responsible for storing pet-specific metadata (species, age) and maintaining its own list of assigned tasks.
+    - Owner: Acts as the data entry point, managing a collection of multiple pets.
+    - Scheduler: Functioning as the "Brain," this class is responsible for aggregating tasks across all pets, sorting them chronologically, and identifying potential timing conflicts.
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
+    Yes, my design evolved slightly during the skeleton implementation to improve data handling and reliability
+- If yes, describe at least one change and why you made it.
+    - One specific change was the decision to use Python Dataclasses for the Task, Pet, and Owner objects. Originally, I considered standard classes, but switching to dataclasses allowed for a much cleaner implementation of the logic layer by automatically handling initialization and providing a readable string representation (repr) for debugging. Additionally, I shifted the add_pet logic into the Scheduler class to centralize how the "Brain" accesses data across the entire system, rather than having the Scheduler reach into a separate Owner object constantly
 
 ---
 
