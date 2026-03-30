@@ -1,9 +1,11 @@
 classDiagram
     class Task {
+        +id: int
         +description: str
-        +due_time: datetime
+        +due_time: str
         +duration_mins: int
         +priority: str
+        +frequency: str
         +is_completed: bool
         +mark_complete() void
     }
@@ -11,6 +13,7 @@ classDiagram
     class Pet {
         +name: str
         +species: str
+        +age: int
         +tasks: List~Task~
         +add_task(task: Task) void
     }
@@ -18,18 +21,20 @@ classDiagram
     class Owner {
         +name: str
         +pets: List~Pet~
+        +add_pet(pet: Pet) void
     }
 
     class Scheduler {
         +pets: List~Pet~
         +add_pet(pet: Pet) void
-        +get_all_tasks() List~Task~
-        +get_upcoming_tasks(reference_time: datetime) List~Task~
-        +check_conflicts() List~Task~
+        +_time_to_minutes(time_str: str) int
+        +get_all_tasks() List~Tuple~
+        +get_upcoming_tasks() List~Tuple~
+        +check_conflicts(new_task: Task) bool
     }
 
     Pet "1" *-- "0..*" Task : has
-    Scheduler "1" o-- "0..*" Pet : manages
-    Owner "1" o-- "0..*" Pet : owns
+    Scheduler "1" o-- "0..*" Pet : tracks
+    Owner "1" o-- "0..*" Pet : manages
     Owner --> Scheduler : uses
-    Scheduler ..> Task : processes
+    Scheduler ..> Task : validates
