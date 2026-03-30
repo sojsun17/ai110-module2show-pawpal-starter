@@ -34,6 +34,12 @@ I implemented several algorithms to make the care assistant more intelligent:
 ## Getting started
 
 ### Setup
+I implemented several custom algorithms to transform this from a simple list into an intelligent assistant:Chronological Sorting: Uses a lambda sorting key to automatically order tasks by their "HH:MM" time, ensuring a logical flow from morning to night.Conflict Detection: A lightweight algorithm that converts time strings into minutes since midnight to detect and warn users about overlapping tasks .OOP Architecture: Built using Python Dataclasses to manage complex relationships between Owners, Pets, and Tasks with high data integrity .Automated Recurrence: Logic stubs included to handle "Daily" task regeneration using Python's timedelta.Streamlit UIReal-time Validation: Integrated backend conflict detection to show st.warning alerts immediately when a user enters an overlapping time.Profile Management: A dedicated sidebar allows users to update Owner and Pet profiles dynamically.Optimized Table Views: Professional data presentation using st.table to display the final care plan.🧪 Testing PawPal+To ensure the system's reliability, I built an automated test suite using pytest.How to Run TestsBashpython -m pytest
+What is TestedSorting Correctness: Verified that tasks are returned in chronological order regardless of the order they were added.Conflict Detection: Confirmed that the Scheduler correctly flags overlapping task durations as conflicts.Data Consistency: Ensured that Task objects correctly store and update their completion status.Confidence Level: ⭐⭐⭐⭐⭐ The system is highly reliable for household use, as confirmed by 100% passing status in the automated suite.
+
+Demo
+(< href="/course_images/ai110/your_screenshot_name.png" target="_blank"><img src='SojaSunny.png/' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>.>)
+
 
 ```bash
 python -m venv .venv
