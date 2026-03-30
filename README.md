@@ -38,7 +38,7 @@ I implemented several custom algorithms to transform this from a simple list int
 What is TestedSorting Correctness: Verified that tasks are returned in chronological order regardless of the order they were added.Conflict Detection: Confirmed that the Scheduler correctly flags overlapping task durations as conflicts.Data Consistency: Ensured that Task objects correctly store and update their completion status.Confidence Level: ⭐⭐⭐⭐⭐ The system is highly reliable for household use, as confirmed by 100% passing status in the automated suite.
 
 ## Demo
-<img src='SojaSunny.png/' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>.>)
+<img src='SojaSunny.png/' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>
 
 
 ```bash
