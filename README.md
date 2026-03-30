@@ -22,6 +22,15 @@ Your final app should:
 - Display the plan clearly (and ideally explain the reasoning)
 - Include tests for the most important scheduling behaviors
 
+## Smarter Scheduling
+
+I implemented several algorithms to make the care assistant more intelligent: 
+- Chronological Sorting: Tasks are automatically ordered by time using a lambda-based sorting key to ensure the schedule flows correctly from morning to night. 
+- Conflict Detection: A lightweight algorithm converts "HH:MM" times into minutes to identify if a new task overlaps with an existing appointment for any pet. 
+- Automated Recurrence: Tasks marked as "Daily" use Python’s timedelta to automatically regenerate for the following day once marked complete. 
+- Status Filtering: The system can filter tasks by completion status to help the owner focus on what still needs to be done. 
+
+
 ## Getting started
 
 ### Setup
