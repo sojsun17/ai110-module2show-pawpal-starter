@@ -1,44 +1,37 @@
 import pytest
-from pawpal_system import Task, Pet
+from pawpal_system import Task, Pet, Scheduler
 
-def test_task_completion():
-    """Verify that calling mark_complete() actually changes the task's status."""
-    # Create a dummy task
-    task = Task(
-        id=1, 
-        description="Evening Feeding", 
-        due_time="18:00", 
-        duration_mins=10, 
-        priority="high"
-    )
+def test_chronological_sorting():
+    """Verify tasks are returned in HH:MM order regardless of input order."""
+    s = Scheduler()
+    p = Pet("Mochi", "Dog", 2)
+    s.add_pet(p)
     
-    # Check initial status
-    assert task.is_completed is False
+    # ADDED 'low' and 'high' as the priority arguments
+    p.add_task(Task(1, "Dinner", "18:00", 30, "low"))
+    p.add_task(Task(2, "Breakfast", "08:00", 20, "high"))
     
-    # Perform action
-    task.mark_complete()
-    
-    # Verify change
-    assert task.is_completed is True
+    scheduled = s.get_upcoming_tasks()
+    # Check that Breakfast (08:00) comes before Dinner (18:00)
+    assert scheduled[0][1].description == "Breakfast"
+    assert scheduled[1][1].description == "Dinner"
 
-def test_task_addition():
-    """Verify that adding a task to a Pet increases that pet's task count."""
-    # Create a pet
-    my_pet = Pet(name="Mochi", species="Dog", age=2)
+def test_conflict_detection():
+    """Verify that overlapping times are flagged as conflicts."""
+    s = Scheduler()
+    p = Pet("Mochi", "Dog", 2)
+    s.add_pet(p)
     
-    # Check initial task count
-    assert len(my_pet.tasks) == 0
+    # Task 1: 10:00 - 11:00 (60 mins)
+    p.add_task(Task(1, "Long Walk", "10:00", 60, "medium"))
     
-    # Create and add a task
-    new_task = Task(
-        id=2, 
-        description="Brush Fur", 
-        due_time="19:00", 
-        duration_mins=15, 
-        priority="low"
-    )
-    my_pet.add_task(new_task)
-    
-    # Verify the count increased
-    assert len(my_pet.tasks) == 1
-    assert my_pet.tasks[0].description == "Brush Fur"
+    # Task 2: Starts at 10:30 (Conflict!)
+    conflict_task = Task(2, "Snack", "10:30", 15, "low")
+    assert s.check_conflicts(conflict_task) is True
+
+def test_daily_recurrence():
+    """Verify marking a daily task complete works."""
+    # Added 'medium' priority and 'Daily' frequency
+    t = Task(1, "Vitamin", "09:00", 5, "medium", frequency="Daily")
+    t.mark_complete()
+    assert t.is_completed is True
